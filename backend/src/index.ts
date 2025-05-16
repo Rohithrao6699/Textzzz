@@ -1,37 +1,16 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
+import errorMiddleWare from "./middleware/ErrorMiddleware";
+import userRouter from "./routes/AuthRoutes";
+import RoomRouter from "./routes/RoomRoutes";
 
 const app = express();
 app.use(express.json());
+
+app.use("/auth", userRouter);
+app.use("/room", RoomRouter);
+
+app.use(errorMiddleWare);
 main();
-const Prisma = new PrismaClient();
-
-app.post("/singup", async (req, res) => {
-  const { email, password, name } = req.body;
-
-  const response = await Prisma.user.create({
-    data: {
-      email,
-      password,
-      name,
-    },
-  });
-
-  res.json({
-    response,
-  });
-});
-
-app.post("/signin", async (req, res) => {
-  const { email, password } = req.body;
-
-  const response = await Prisma.user.findFirst({
-    where: { email: email, password: password },
-  });
-  res.json({
-    response,
-  });
-});
 
 function main() {
   app.listen(3000, function () {
