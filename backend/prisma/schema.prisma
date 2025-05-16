@@ -12,11 +12,12 @@ model User {
   email    String
   password String
   name     String
-  Room     Room[]
+  RoomId   Int?
+  Room     Room?  @relation(fields: [RoomId], references: [id])
 }
 
 model Room {
-  id      Int   @id @default(autoincrement())
-  userId1 Int?  @unique
-  user1   User? @relation(fields: [userId1], references: [id])
+  id   Int    @id @default(autoincrement())
+  name String
+  User User[]
 }
