@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { auth } from "../middleware/AuthMiddleware";
-import { createRoom } from "../handlers/httpHandlers/userRooms/createRoom";
-import { joinRoom } from "../handlers/httpHandlers/userRooms/joinRoom";
-import { userOfRooms } from "../handlers/httpHandlers/userRooms/usersOfRoom";
-import { roomOfUser } from "../handlers/httpHandlers/userRooms/roomOfUser";
+import { createRoom } from "../handlers/userRooms/createRoom";
+import { joinRoom } from "../handlers/userRooms/joinRoom";
+import { userOfRooms } from "../handlers/userRooms/usersOfRoom";
+import { roomOfUser } from "../handlers/userRooms/roomOfUser";
 
 const RoomRouter = Router();
 
