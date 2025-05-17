@@ -2,8 +2,7 @@ import { AppError } from "../types/AppError";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Token } from "monaco-editor";
-const Jwt_Secret = "123Random";
+import { Config } from "../config/config";
 
 const Prisma = new PrismaClient();
 
@@ -22,7 +21,7 @@ class AuthService {
   //
   async SignupService(safeUser: SignupServiceType) {
     const hashed = await bcrypt.hash(safeUser.password, 10);
-
+    console.log(process.env.JWT_SECRET);
     const response = await Prisma.user.create({
       data: {
         email: safeUser.email,
@@ -51,7 +50,7 @@ class AuthService {
       );
       if (passwordMatch) {
         const id = userMatch?.id;
-        const token = jwt.sign({ id }, Jwt_Secret);
+        const token = jwt.sign({ id }, Config.JWT_SECRET);
         return token;
       } else {
         throw new AppError("invalid Password", 411);

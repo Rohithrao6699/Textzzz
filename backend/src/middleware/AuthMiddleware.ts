@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
-const Jwt_Secret = "123Random";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { AppError } from "../types/AppError";
+import { Config } from "../config/config";
 
 export function auth(req: Request, res: Response, next: NextFunction) {
   const token = req.headers.authorization;
 
   if (token) {
     try {
-      const decodedInfo = jwt.verify(token, Jwt_Secret);
+      const decodedInfo = jwt.verify(token, Config.JWT_SECRET);
       if (decodedInfo) {
         req.userId = (decodedInfo as JwtPayload).id;
         next();
